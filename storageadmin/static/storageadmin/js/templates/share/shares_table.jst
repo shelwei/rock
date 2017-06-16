@@ -1,0 +1,70 @@
+<div class="alert alert-warning">
+  <p>
+    Share size enforcement is temporarily disabled due to incomplete support in
+    BTRFS. Until this status changes, the effective size of a Share is equal to the
+    size of the Pool it belongs to.
+  </p>
+</div>
+
+{{#if collectionNotEmpty}}
+  <table id="shares-table" class="table table-bordered table-striped share-table data-table" width="100%" summary="List of shares">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Size</th>
+        <th>Pool</th>
+        <th>Usage <i class="fa fa-info-circle" title="Current share content"></th>
+		<th>Usage (Btrfs) <i class="fa fa-info-circle" title="Current share content considering snapshots too"></th>
+	    <th>Compression algorithm</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+    {{#each shares}}
+    <tr>
+        <td><a href="#shares/{{this.name}}"><i class="glyphicon glyphicon-folder-open"></i>  {{this.name}}</a></td>
+        <td>{{humanize_size this.size}}</td>
+        <td>{{this.pool.name}}</td>
+        <td>{{humanize_size this.rusage}}</td>
+		<td>{{humanize_size this.pqgroup_rusage}} {{checkUsage this.size this.pqgroup_rusage}}</td>
+        <td>
+        {{displayCompressionAlgo this.compression_algo this.name}}
+        </td>
+        <td>{{#if (isSystemShare this.id this.pool.role)}}
+                N/A
+            {{else}}
+                <a id="delete_share_{{this.name}}" data-name="{{this.name}}" data-action="delete"
+                data-pool="{{this.pool.name}}" data-size="{{humanize_size this.size}}" data-usage="{{humanize_size this.eusage}}" rel="tooltip" title="Delete share"><i class="glyphicon glyphicon-trash"></i></a>
+            {{/if}}
+		</td>
+    </tr>
+    {{/each}}
+    </tbody>
+  </table>
+  <a href="#add_share" id="add_share" class="btn btn-primary"><i class="glyphicon glyphicon-edit "></i> Create Share</a>
+{{ else }}
+      <h4>No shares have been created</h4>
+      <a href="#add_share" id="add_share" class="btn btn-primary"><i class="glyphicon glyphicon-edit "></i> Create Share</a>
+{{/if}}
+
+{{! Todo: maintain a common file and function for all modals? }}
+<div id="delete-share-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header modal-header-danger">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 class="modal-title">Delete <span class="pass-share-name"></span> ?</h3>
+      </div>
+      <div class="modal-body">
+        <div class="messages"></div>
+        <p>Deleting <strong><em><span class="pass-share-name"></span></em></strong> will destroy all of it's data (<strong><span id="pass-share-usage"></span></strong>). Are you sure?</p>
+	<label><input type="checkbox" id="force-delete" name="force-delete"> Force Delete &nbsp;<i class="fa fa-info-circle fa-lg" 
+	title="Forces the deletion of undetected Snapshots and then deletes the Share. Useful to forcefully delete the Rock-on root share, for example." rel="tooltip"></i></label>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">No</button>
+        <button id="js-confirm-share-delete" class="btn btn-primary">Yes</button>
+      </div><!--end modal-fooetr-->
+    </div><!--end modal-content-->
+  </div><!--end modal-dialog-->
+</div>

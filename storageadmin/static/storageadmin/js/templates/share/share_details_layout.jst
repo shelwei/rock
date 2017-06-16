@@ -1,0 +1,98 @@
+<script>
+/*
+ * Copyright (c) 2012-2017 RockStor, Inc. <http://rockstor.com>
+ * This file is part of RockStor.
+ *
+ * RockStor is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published
+ * by the Free Software Foundation; either version 2 of the License,
+ * or (at your option) any later version.
+ *
+ * RockStor is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+</script>
+<div class="messages"></div>
+<div class="pull-right">
+  <span id="rollback-btn-ph"></span>
+    <a id="js-clone" class="btn btn-primary" href="#shares/{{shareName}}/create-clone"><i class="glyphicon glyphicon-book "></i> Clone</a>
+	{{#unless isSystemShare}}
+        <button id="js-delete" class="btn btn-danger" type="button" type="button"><i class="glyphicon glyphicon-trash "></i> Delete </button>
+	{{/unless}}
+</div>
+<span class="h2">{{shareName}}</span>
+<div class="alert alert-warning">
+  <p>
+    Share size enforcement is temporarily disabled due to incomplete support in
+    BTRFS. Until this status changes, the effective size of a Share is equal to the
+    size of the Pool it belongs to.
+	{{#if isSystemShare}}
+	<br/><b>This is a System Share created at installation time on OS Pool and cannot be deleted.</b>
+	{{/if}}
+  </p>
+</div>
+
+<!-- Modal for delete share -->
+
+<div id="delete-share-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Delete {{shareName}} ?</h3>
+      </div>
+      <div class="modal-body">
+        <div class="messages"></div>
+
+        <p>By deleting <strong><em>{{shareName}}</em></strong>, all it's data (<strong>{{shareUsage}}</strong>) will be lost. Are you sure?</p>
+      
+      <label><input type="checkbox" id="force-delete" name="force-delete"> Force Delete &nbsp;<i class="fa fa-info-circle fa-lg" 
+    title="Forces the deletion of undetected Snapshots and then deletes the Share. Useful to forcefully delete the Rock-on root share, for example." rel="tooltip"></i></label>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">No</button>
+        <button id="js-confirm-share-delete" class="btn btn-primary">Yes</button>
+      </div><!--end modal-footer-->
+    </div><!--end modal-content-->
+  </div><!--end modal-dialog-->
+</div>
+
+<!-- End delete share Modal -->
+
+
+<ul class="nav nav-tabs">
+  <li class="active"><a href="#usage" data-toggle="tab">Usage</a></li>
+  <li><a href="#access-control" data-toggle="tab">Access control</a></li>
+  <li><a href="#snapshots" data-toggle="tab">Snapshots</a></li>
+</ul>
+
+<div class="css-panes">
+  <div id="usage">
+    <div class="tab-section">
+      <div class="row">
+        <div class="col-md-12">
+          <div id="ph-share-usage"></div>
+	</div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="tab-section">
+	  <div id="ph-compression-info"></div>
+	</div>
+      </div>
+    </div>
+  </div>
+  <div id="access-control">
+    <div id="ph-access-control"></div>
+  </div>
+  <div id="snapshots">
+    <div id="ph-snapshots"></div>
+  </div>
+</div>

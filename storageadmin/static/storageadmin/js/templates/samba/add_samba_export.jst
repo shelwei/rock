@@ -1,0 +1,148 @@
+<div class="row">
+<div class="col-md-8">
+<div class="panel panel-default">
+  <div class="panel-heading">
+      {{#if sambaShareIdNotNull}}
+            Edit Samba export for <strong>{{smbShareName}}</strong>
+      {{else}}
+            Add Samba export
+      {{/if}}
+  </div>
+  <div class="panel-body">
+    <form class="form-horizontal" id="add-samba-export-form" name="aform">
+    <div class="messages"></div>
+    <!-- Shares -->
+        <div class="form-group">
+            {{#if sambaShareIdNull}}
+                <label class="col-sm-4 control-label" for="shares">Shares to export<span class="required"> *</span></label>
+            {{/if}}
+            <div class="col-sm-4">
+                {{#if sambaShareIdNull}}
+                    <select class="form-control" name="shares" id="shares" size="10" data-placeholder="Select shares to export" multiple>
+                    {{#each shares}}
+                        <option value="{{this.name}}">{{this.name}}</option>
+                    {{/each}}
+                    </select>
+                {{/if}}
+            </div>
+        </div>
+
+        <!-- Admin Users  -->
+        <div class="form-group">
+          <label class="col-sm-4 control-label" for="admin_users">Admin users</label>
+          <div class="col-sm-4">
+            <select class="form-control" name="admin_users" id="admin_users" size="10" title="(optional) list of users who will be granted super-user privileges for all file operations." data-placeholder="Select admin user(s)" multiple>
+                     {{display_adminUser_options}}
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-4 control-label" for="browsable">Browsable<span class="required"> *</span></label>
+          <div class="col-sm-4">
+              {{display_options "browsable"}}
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-4 control-label" for="guest_ok">Guest Ok<span class="required"> *</span></label>
+          <div class="col-sm-4">
+          {{display_options "guest_ok"}}
+           </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-4 control-label" for="read_only">Read only<span class="required"> *</span></label>
+          <div class="col-sm-4">
+          {{display_options "read_only"}}
+           </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-4 control-label" for="comment">Comment</label>
+          <div class="col-sm-4">
+              <input type="text" id="comment" class="form-control" name="comment" 
+                {{#if sambaShareIdNotNull}}
+                     value="{{smbShareComment}}"
+                {{else}}
+                     value="Samba-Export" 
+                {{/if}}
+               title="Comment string to associate with the new share">
+          </div>
+	     </div>
+
+	     <div class="form-group">
+             <div class="col-sm-4"></div>
+    	     <div class="col-sm-4">
+    	       <input type="checkbox" name="shadow_copy"
+        	    {{#if smbSnapshotPrefixRule}}
+        	       checked="true"
+        	    {{/if}} 
+    	       id="shadow_copy">Enable Shadow Copy? &nbsp;&nbsp;<a id="shadow-copy-info" href="#" class="moreinfo"><i class="fa fa-info-circle"></i></a>
+            </div>
+          </div> <!-- closing form group -->
+          <div class="form-group"
+            {{#unless smbSnapshotPrefixRule}}
+    		   style="visibility: hidden"
+		    {{/unless}}
+		  id="snapprefix-ph">
+		  <label class="col-sm-4 control-label" for="cert-utl">Snapshot prefix<span class="required"> *</span></label>
+          <div class="col-sm-4">
+             <input type="text" class="col-sm-4 form-control" id="snapshot_prefix" name="snapshot_prefix" 
+		      {{#if sambaShareIdNotNull}}
+		          value="{{smbShareSnapPrefix}}"
+		      {{/if}}
+		     title="Prefix of Snapshots for this Share. You must use this prefix when scheduling Snapshot tasks for this Share for shadow copies to work.">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-4 control-label" for="custom_config">Custom configuration </label>
+          <div class="col-sm-8">
+            <textarea rows="5" columns="40" id="custom_config" name="custom_config" class="form-control" title="You can provide custom parameters here. These lines will be added to the section of each Share selected above in smb.conf">
+                {{# if sambaShareIdNotNull}}
+                    {{configList}}
+                {{/if}}
+            </textarea>
+        </div>
+
+      </div>
+        <div class="form-group">
+          <div class="col-sm-offset-4 col-sm-8">
+	    <a id="cancel" class="btn btn-default">Cancel</a>
+	    <input type="Submit" id="create-samba-export" class="btn btn-primary" value="Submit"></input>
+          </div>
+        </div>
+
+      </form>
+    </div><!--panel-body-->
+  </div><!--panel-default-->
+</div><!--col-md-8-->
+</div><!--row-->
+
+
+<div id="shadow-copy-info-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 id="myModalLabel">Shadow Copy</h4>
+      </div>
+      <div class="modal-body">
+        <div class="messages"></div>
+        <p>
+	  This feature is useful if you'll be accessing this Share from Windows
+	  clients. By enabling this feature, you can browse older versions or
+	  "shadow copies" of files from Windows. You can read technical details
+	  on <a href="https://en.wikipedia.org/wiki/Shadow_Copy"
+	  target="_blank">Wikipedia</a>.
+	</p>
+	<p>
+	  In addition to enabling this feature, you need to schedule
+	  Snapshots. Read our <a href="http://rockstor.com/docs"
+	  target="_blank">documentation</a> for more information.
+	</p>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,24 @@
+<div id="breadcrumb">
+  <div>Select</div>
+  <div>Change RAID level?</div>
+  <div>Select disks to add</div>
+</div>
+<br>
+<form id="add-disks-form">
+    {{#if model.raidChange}}
+    <div class="row">
+    <div class="form-group col-md-4">
+        <label for="raid-level">Select a new raid level<br>raid5 & raid6 are not production-ready</label>
+        <select id="raid-level" name="raid-level" class="form-control">
+            <option value="">Select a new raid level</option>
+            {{display_raid_levels}}
+        </select>
+    </div>
+    </div>
+    {{/if}}
+    <h4>Select disks to add</h4>
+    <div class="poolDiskTableScroll">
+        <div id="ph-disks-table"></div>
+    </div>
+</form>
+

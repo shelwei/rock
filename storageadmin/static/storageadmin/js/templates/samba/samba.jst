@@ -1,0 +1,68 @@
+<!-- Module Body -->
+<div class="row">
+  <div class="col-md-12">
+    <div id="details-header">
+      <table>
+        <tr>
+          <td><span class="h3">Samba Service&nbsp;&nbsp;&nbsp;</span></td>
+          <td>
+          <input type="checkbox" name="samba-export-checkbox" data-size="mini">
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div id="samba-warning" class="alert alert-warning" style="display:none">
+    	<strong>Warning! Samba Service is not running</strong>. Clients won't be able to mount unless Samba is running.
+    </div>
+    <br>
+    <div class="messages"></div>
+    <!-- Content -->
+    {{#if collectionNotEmpty}}
+      <table id="samba-exports-table" class="table table-bordered table-striped share-table data-table" width="100%" summary="List of samba exports">
+        <thead>
+          <tr>
+            <th scope="col" abbr="Share name">Share</th>
+            <th scope="col" abbr="Browseable">Browseable</th>
+            <th scope="col" abbr="Guest ok">Guest ok</th>
+            <th scope="col" abbr="Read only">Read only</th>
+            <th scope="col" abbr="Admin Users">Admin Users</th>
+            <th scope="col" abbr="Comments">Comment</th>
+            <th scope="col" abbr="Actions">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each samba}}
+            <tr>
+                <td>{{this.share}}</td>
+                <td>{{this.browsable}}</td>
+                <td>{{this.guest_ok}}</td>
+                <td>{{this.read_only}}</td>
+                <td>{{getAdminUsers this.admin_users}}</td>
+                <td>{{this.comment}}</td>
+                <td>
+                    <a href="#samba/edit/{{this.id}}"><i class="glyphicon glyphicon-pencil"></i></a>&nbsp;
+                    <a href="#" class="delete-samba-export" data-share="{{this.share}}" data-id="{{this.id}}"><i class="glyphicon glyphicon-trash"></i></a>
+                </td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    {{else}}
+      <table id="samba-exports-table" class="table table-condensed table-bordered table-hover table-striped share-table tablesorter" summary="List of samba exports">
+        <tbody>
+          <tr>
+            <td colspan="5">
+              <h4>No samba exports have been created</h4>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    {{/if}}
+    {{#if sharesNotEmpty}}
+      <a href="#add-samba-export" id="add-samba-export" class="btn btn-primary"><i class="glyphicon glyphicon-edit "></i> Add Samba Export</a>
+    {{else}}
+      <a  id="add-samba-export" class="btn btn-primary disabled" title="No shares available to export through Samba"><i class="glyphicon glyphicon-edit "></i> Add Samba Export</a>
+    {{/if}}
+  </div>
+</div>
+

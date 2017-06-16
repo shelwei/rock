@@ -1,0 +1,59 @@
+<script>
+  /*
+  * Copyright (c) 2012-2016 RockStor, Inc. <http://rockstor.com>
+  * This file is part of RockStor.
+  *
+  * RockStor is free software; you can redistribute it and/or modify
+  * it under the terms of the GNU General Public License as published
+  * by the Free Software Foundation; either version 2 of the License,
+  * or (at your option) any later version.
+  *
+  * RockStor is distributed in the hope that it will be useful, but
+  * WITHOUT ANY WARRANTY; without even the implied warranty of
+  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+  * General Public License for more details.
+  *
+  * You should have received a copy of the GNU General Public License
+  * along with this program. If not, see <http://www.gnu.org/licenses/>.
+  *
+  */
+</script>
+
+<div id="messages"></div>
+<div class="row">
+    <div class="col-md-12">
+        <br>
+        <br>
+        <div id="services-list">
+            <div id="service">
+                <table id="services-table" class="table table-bordered table-striped table-condensed data-table" width="100%">
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each servicesColl}}
+                        <tr id="{{this.name}}">
+                            <td>{{this.display_name}} &nbsp; {{#isServiceConfigurable this.name}}
+                                <a href="#" class="configure" data-service-name="{{this.name}}"><i class="glyphicon glyphicon-wrench"></i></a>&nbsp; {{/isServiceConfigurable}}
+                                {{#ifTooltipExist this.name}}
+                                    <i class="fa fa-info-circle" title="{{lookup ../tooltipMap this.name}}"></i>
+                                {{/ifTooltipExist}}
+                            </td>
+                            <td id="{{this.name}}-status">
+                                <input type="checkbox" data-service-name="{{this.name}}" data-size="mini" {{#if this.status}} checked {{/if}}>
+                                <div class="command-status" data-service-name="{{this.name}}">&nbsp;</div>
+                                <div class="simple-overlay" id="{{this.name}}-err-popup">
+                                    <div class="overlay-content"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

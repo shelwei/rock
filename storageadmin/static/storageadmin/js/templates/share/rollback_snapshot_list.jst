@@ -1,0 +1,25 @@
+{{#if collectionNotEmpty}}
+  <table id="snapshots-table" class="table table-condensed table-bordered table-hover table-striped share-table tablesorter" summary="List of snapshots">
+    <thead>
+      <tr>
+        <th>Select</th>
+        <th>Name</th>
+        <th>Created on</th>
+        <th>Size</th>
+      </tr>
+    </thead>
+    <tbody>
+    {{#each rollbackSnaps}}
+        {{#if this.writable}}
+        <tr>
+            <td><input type="radio" name="snapshot" value="{{this.name}}"></td>
+            <td><i class="glyphicon glyphicon-camera"></i> {{this.name}}</td>
+            <td>{{getDate this.toc}}</td>
+            <td>{{humanReadableSize this.size}}</td>
+        </tr>
+        {{/if}}
+    {{/each}}
+    </tbody>
+  </table>
+  <div>{{pagination}}</div>
+{{/if}}

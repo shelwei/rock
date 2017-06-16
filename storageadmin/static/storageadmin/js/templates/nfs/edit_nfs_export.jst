@@ -1,0 +1,113 @@
+<script>
+/*
+ * Copyright (c) 2012-2013 RockStor, Inc. <http://rockstor.com>
+ * This file is part of RockStor.
+ *
+ * RockStor is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published
+ * by the Free Software Foundation; either version 2 of the License,
+ * or (at your option) any later version.
+ *
+ * RockStor is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+</script>
+
+<div class="row">
+<div class="col-md-8">
+<div class="panel panel-default">
+{{#if nfsExportNotEmpty}}
+<div class="panel panel-heading">Edit NFS export</div>
+{{else}}
+<div class="panel panel-heading">Add NFS export</div>
+{{/if}}
+<div class="panel-body">
+      <form class="form-horizontal" id="edit-nfs-export-form" name="aform" >
+        <div class="messages"></div>
+
+        <!-- Shares -->
+        <div class="form-group">
+          <label class="col-sm-4 control-label" for="shares">Shares to export<span class="required"> *</span></label>
+          <div class="col-sm-4">
+            <select class="form-control" name="shares" id="shares" size="10" data-placeholder="Select shares to export" multiple>
+              {{#each shares}} 
+                   <option value="{{this.name}}" {{showSelectedShare this.name ../nfsExportGrp.exports}}>{{this.name}}</option>
+              {{/each}}
+            </select>
+          </div>
+        </div>
+
+        <!-- host string -->
+        <div class="form-group">
+          <label class="col-xs-4 control-label" for="host_str">NFS Clients<span class="required"> *</span></label>
+          <div class="col-sm-6">
+            <input class="form-control shorten-input" type="text" name="host_str" id="host_str" data-html = "true"
+	    title="Hosts permitted to NFS mount. There are five broad categories of this input.<br><strong>anonymous:</strong> Just type a single * character and any host will be allowed.<br><strong>single host:</strong> Hostname or a IP address.<br><strong>IP networks:</strong> All hosts of a subnet given by <strong>address/netmask</strong>.<br><strong>wildcards:</strong> Names with wildcard(*, ?) characters for compact notation. for example, *.cs.foo.edu matches all hosts in the domain cs.food.edu.<br><strong>Netgroups:</strong> NIS netgroups given as @group.<br><br>For more details read the manpage for exports."
+	    value="{{nfsExportGrp.host_str}}">
+          </div>
+        </div>
+
+	<!-- admin host -->
+	<div class="form-group">
+	  <label class="col-xs-4 control-label" for="trusted_host">Admin
+	Host</span></label>
+	  <div class="col-sm-6">
+	    <input class="form-control shorten-input" type="text" id="admin_host" name="admin_host" title="Hostname or IP of a host to be designated as the admin host. The
+		   export will be available for this host with rw and no_root_squash
+		   options so that root user can change ownership and permissions of
+		   various directories from this host. This is usually preferred in
+		   conjunction with NIS." value="{{nfsExportGrp.admin_host}}">
+	  </div>
+	</div>
+
+        <!-- writable -->
+        <div class="form-group">
+          <label class="col-xs-4 control-label" for="mod_choice">Access type</label>
+          <div class="col-xs-4">
+            {{#each modify_choices}}
+                <label class="radio-inline">
+                {{#if ../nfsExportGrp.editable}}
+                        <input type="radio" name="mod_choice" value="{{this.value}}" {{accessType_editView ../nfsExportGrp.editable this.value}}>
+                {{else}}          
+                        <input type="radio" name="mod_choice" value="{{this.value}}" {{accessType_addView this.name}}>
+                {{/if}}
+                {{this.name}}</label>
+            {{/each}}
+          </div>
+        </div>
+
+        <!-- sync -->
+        <div class="form-group">
+          <label class="col-xs-4 control-label" for="sync_choice">Response type</label>
+          <div class="col-xs-4">
+          {{#each sync_choices}}
+                <label class="radio-inline">
+                {{#if ../nfsExportGrp.syncable}}
+                        <input type="radio" name="sync_choice" value="{{this.value}}" {{responseType_editView ../nfsExportGrp.syncable this.value}} >
+                {{else}}          
+                        <input type="radio" name="sync_choice" value="{{this.value}}" {{responseType_addView this.name}}>
+                {{/if}}
+                {{this.name}}</label>
+            {{/each}}
+          </div>
+        </div>
+
+        <!-- Submit -->
+        <div class="form-group">
+          <div class="col-xs-8 col-xs-offset-4">
+            <a id="cancel" class="btn btn-default">Cancel</a>
+            <input type="Submit" id="update-nfs-export" class="btn btn-primary" value="Submit"></input>
+          </div>
+        </div>
+
+      </form>
+    </div><!--panel-body-->
+</div><!--panel-default-->
+  </div> <!-- col-md-8 -->
+</div>  <!-- row -->

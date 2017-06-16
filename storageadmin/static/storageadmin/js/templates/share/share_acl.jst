@@ -1,0 +1,64 @@
+<script>
+/*
+ * Copyright (c) 2012-2013 RockStor, Inc. <http://rockstor.com>
+ * This file is part of RockStor.
+ *
+ * RockStor is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published
+ * by the Free Software Foundation; either version 2 of the License,
+ * or (at your option) any later version.
+ *
+ * RockStor is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+</script>
+<div class="messages"></div>
+<div>
+  <a class="btn btn-primary" href="#" id="js-acl-edit"><i class="glyphicon glyphicon-edit "></i> Edit</a>
+</div>
+<br><br>
+<table class="table table-bordered table-condensed">
+  <tr>
+    <td>Owner</td>
+    <td>{{shareOwner}}</td>
+  </tr>
+  <tr>
+    <td>Group</td>
+    <td>{{shareGroup}}</td>
+  </tr>
+  <tr>
+    <td>
+      Permissions<br>
+      (<span id="permStrEdit">{{sharePerms}}</span>)
+    </td>
+    <td>
+      <table class="noborder table-condensed">
+        <tr>
+          <td>&nbsp;</td>
+          <td>Owner</td>
+          <td>Group</td>
+          <td>Other</td>
+        </tr>
+        <tr>
+          <td>Read</td>
+          {{view_read_permissions}}
+        </tr>
+        <tr>
+          <td>Write</td>
+          {{view_write_permissions}}
+        </tr>
+        <tr>
+          <td>Execute</td>
+          {{view_execute_permissions}}
+        </tr>
+
+      </table>
+    </td>
+  </tr>
+</table>

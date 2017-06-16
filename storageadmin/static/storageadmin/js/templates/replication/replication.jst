@@ -1,0 +1,93 @@
+<script>
+/*
+ * Copyright (c) 2012-2013 RockStor, Inc. <http://rockstor.com>
+ * This file is part of RockStor.
+ *
+ * RockStor is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published
+ * by the Free Software Foundation; either version 2 of the License,
+ * or (at your option) any later version.
+ *
+ * RockStor is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+</script>
+
+<div class="row">
+<div class="col-md-12">
+<div id="details-header">
+<table>
+<tr>
+<td><span class="h3">Replication Service&nbsp;&nbsp;&nbsp;</span></td>
+<td><input type="checkbox" name="replica-service-checkbox" data-size="mini"></td>
+</tr>
+</table>
+</div>
+
+
+<div id="replication-warning" class="alert alert-warning" style="display:none">
+<strong>Warning! The Replication service is not turned on. </strong>
+</div>
+
+
+<div class="messages"></div>
+<div id="details-header">
+<span class="h3">Replication Send Tasks on this appliance</span>
+</div>
+{{#if collectionNotEmpty}}
+    <div class="row">
+    <div class="col-md-12">
+    <div class="messages"></div>
+    <!-- Content -->
+    <table id="replicas-table" class="table table-bordered table-striped share-table data-table" width="100%" summary="List of replicas">
+    <thead>
+    <tr>
+    <th scope="col" abbr="Share">Task name </th>
+    <th scope="col" abbr="Share">Source (Share) </th>
+    <th scope="col" abbr="Appliance">Destination Appliance</th>
+    <th scope="col" abbr="Appliance">Destination Pool</th>
+    <th scope="col" abbr="Frequency">Frequency</th>
+    <th scope="col" abbr="Last">Last backup</th>
+    <th scope="col" abbr="Actions">Enable/Disable</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#each replicaColl}}
+        <tr>
+            <td><a href="#edit-replication-task/{{this.id}}">{{this.task_name}}</a>&nbsp;
+                <a href="#" data-task-name="{{this.task_name}}" data-task-id="{{this.id}}" data-action="delete">
+                <i class="glyphicon glyphicon-trash" rel="tooltip" title="Delete"></i></a>
+            </td>
+            <td>{{this.share}}</td>
+            <td>{{this.appliance}}</td>
+            <td>{{this.dpool}}</td>
+            <td>{{getFrequency this.crontab}}</td>
+            <td>{{lastBackup this.id}}</td>
+            <td><input type="checkbox" name="replica-task-checkbox" data-replica-id="{{this.id}}" data-size="mini" {{#if this.enabled}} checked {{/if}}></td>
+        </tr>
+    {{/each}}
+    </tbody>
+    </table>
+    </div> <!-- col-md-12 -->
+    </div> <!-- row -->
+{{else}}
+    <div class="alert alert-warning"><h4>No replication tasks have been created</h4></div>
+{{/if}}
+{{#if otherAppliances_FreeShares}}
+    <a href="#add_replication_task" class="btn btn-primary">Add Replication Task</a>
+{{else}}
+    {{#if noOtherAppliances}}
+        <div class="alert alert-warning"><h4>No other RockStor appliances have been connected. At least one other appliance must be connected to setup a replication task. You can connect to an appliance on the <a href=#appliances>Appliances</a> page.</h4></div>
+    {{/if}}
+    {{#if noFreeShares}}
+        <div class="alert alert-warning"><h4>All existing shares have replication tasks setup. Create a new share to setup a new replication task.</h4>
+    {{/if}}
+{{/if}}
+</div> <!-- col-md-12 -->
+</div> <!-- row -->

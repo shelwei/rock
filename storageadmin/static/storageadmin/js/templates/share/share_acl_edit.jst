@@ -1,0 +1,57 @@
+
+<table class="table table-bordered table-condensed">
+  <tr>
+    <td>Owner</td>
+    <td>
+    <div class="col-md-3">
+      <select id="share-owner" class="form-control">
+        {{#each users}}
+             <option value="{{this.username}}" {{showOwnerOption this.username ../share.owner}}>{{this.username}}</option> 
+        {{/each}}
+      </select>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>Group</td>
+    <td>
+    <div class="col-md-3">
+      <select id="share-group" class="form-control">
+      {{#each groups}}
+             <option value="{{this.groupname}}" {{showGroupOption this.groupname ../share.group}}>{{this.groupname}}</option> 
+        {{/each}}
+      </select>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Permissions<br>
+      (<span id="permStrEdit">{{sharePerms}}</span>)
+    </td>
+    <td>
+      <table class="noborder table-condensed">
+        <tr>
+          <td>&nbsp;</td>
+          <td>Owner</td>
+          <td>Group</td>
+          <td>Other</td>
+        </tr>
+        <tr>
+          <td>Read</td>
+          {{edit_read_permissions}}
+        </tr>
+        <tr>
+          <td>Write</td>
+          {{edit_write_permissions}}
+        </tr>
+        <tr>
+          <td>Execute</td>
+          {{edit_execute_permissions}}
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<a class="btn btn-default" href="#" id="js-acl-cancel"> Cancel</a>
+<a class="btn btn-primary" href="#" id="js-acl-save"> Save</a>

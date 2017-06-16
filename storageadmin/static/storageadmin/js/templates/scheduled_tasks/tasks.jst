@@ -1,0 +1,54 @@
+<script>
+/*
+ * Copyright (c) 2012-2013 RockStor, Inc. <http://rockstor.com>
+ * This file is part of RockStor.
+ *
+ * RockStor is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published
+ * by the Free Software Foundation; either version 2 of the License,
+ * or (at your option) any later version.
+ *
+ * RockStor is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+</script>
+
+<h4>Task history for {{taskName}} &nbsp;
+({{display_snapshot_scrub}})
+</h4>
+{{#if collectionNotEmpty}}
+  <div class="row">
+    <div class="col-md-12">
+      <div class="messages"></div>
+      <table id="tasks-table" class="table table-bordered table-striped share-table data-table" width="100%" summary="Tasks">
+        <thead>
+          <tr>
+            <th scope="col" abbr="ID">ID</th>
+            <th scope="col" abbr="Start Time">Start Time</th>
+            <th scope="col" abbr="End Time">End Time</th>
+            <th scope="col" abbr="Status">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each taskColl}}
+            <tr>
+                <td>{{this.id}}</td>
+                <td>{{dateFormat this.start}}</td>
+                <td>{{#if this.end}} 
+                        {{dateFormat this.end}}
+                    {{/if}}
+                </td>
+                <td>{{this.state}}</td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{{/if}}

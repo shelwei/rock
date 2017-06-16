@@ -1,0 +1,59 @@
+<div class="row">
+  <div class="col-md-12">
+    <div id="details-header">
+      <table>
+        <tr>
+          <td><span class="h3">SFTP Service&nbsp;&nbsp;&nbsp;</span></td>
+          <td>
+            <input type="checkbox" name="sftp-service-checkbox" data-size="mini">
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div id="sftp-warning" class="alert alert-warning" style="display:none">
+    	<strong>Warning! SFTP Service is not running</strong>. Clients won't be able to mount unless SFTP is running.
+    </div>
+    <div class="messages"></div>
+    {{#if collectionNotEmpty}}
+      <table id="sftp-shares-table" class="table table-bordered table-striped share-table data-table" width="100%" summary="List of sftp shares">
+        <thead>
+          <tr>
+            <th scope="col" abbr="Host String">Share name</th>
+            <th scope="col" abbr="Access type">Read only</th>
+            <th scope="col" abbr="Actions">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each sftpShare}}
+            <tr>
+                <td>{{this.share}}</td>
+                <td>{{displaySftpPermission this.editable}}</td>
+                <td><a href="#" class="delete-sftp-share" data-id="{{this.id}}">
+                <i class="glyphicon glyphicon-trash"></i></a></td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+      {{else}}
+      <table id="sftp-shares-table" class="table table-condensed table-bordered table-hover table-striped share-table tablesorter" summary="List of sftp shares">
+        <tbody>
+          <tr>
+            <td colspan="5">
+              <h4>No sftp shares have been created</h4>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      {{/if}}
+
+  </div>
+</div>
+
+<a id="add-sftp-share" class="btn btn-primary"
+    {{#if sharesNotEmpty}}
+        href="#add-sftp-share">
+    {{else}}
+        disabled="disabled" title="No shares available to export via SFTP">
+    {{/if}}
+<i class="glyphicon glyphicon-edit "></i> Add SFTP Share</a>
+

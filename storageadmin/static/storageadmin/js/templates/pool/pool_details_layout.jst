@@ -1,0 +1,135 @@
+<script>
+/*
+ * Copyright (c) 2012-2013 RockStor, Inc. <http://rockstor.com>
+ * This file is part of RockStor.
+ *
+ * RockStor is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published
+ * by the Free Software Foundation; either version 2 of the License,
+ * or (at your option) any later version.
+ *
+ * RockStor is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+</script>
+
+<div class="messages"></div>
+<!-- page heading -->
+
+<div class="pull-right">
+ <a href="#add_share?poolName={{poolName}}" id="add_share" class="btn btn-primary"><i class="glyphicon glyphicon-edit "></i> Add Share</a>
+ {{#if isPoolRoleRoot}}
+ <!-- Don't display the delete button if rockstor_rockstor pool -->
+ {{else}}
+ <button id="delete-pool" class="btn btn-danger" type="button"><i class="glyphicon glyphicon-trash" data-name="{{pool.name}}" data-action="delete"></i> Delete</button>
+ {{/if}}
+</div>
+<span class="h2">{{poolName}}</span>
+{{#if isPoolRoleRoot}}
+   <br>
+   <div class="alert alert-danger">
+     <h4>Warning! This Pool is created during install and contains the OS. You can create Shares in it like in any other pool on the system. However, operations like resize, compression and deletion are not allowed.</h4>
+   </div>
+   {{/if}}
+<br>
+<br>
+
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#details" data-toggle="tab">Overview</a></li>
+    <li><a href="#poolscrubs" data-toggle="tab">Scrubs</a></li>
+    <li><a href="#poolrebalances" data-toggle="tab">Balances</a></li>
+  </ul>
+
+  <div class="css-panes">
+    <div id="details">
+      <div class="tab-section">
+      <div class="row">
+        <div class="col-md-6">
+            <div id="ph-pool-info"></div>
+        </div> <!-- col-md-6 -->
+        <div class="col-md-6">
+            <h3>Compression and extra mount options</h3>
+            <div id="ph-compression-info"></div>
+        </div> <!-- col-md-6 -->
+      </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="tab-section">
+            <div id="ph-pool-usage"></div>
+          </div>
+        </div> <!-- col-md-12 -->
+      </div> <!-- row -->
+      <div class="row">
+        <div class="col-md-12">
+          <div class="tab-section">
+
+            <div id="ph-resize-pool-info"></div>
+      <!--   <button id="resize-pool-popup" rel="#resize-pool-form" class="btn btn-primary" type="button"><i class="glyphicon glyphicon-edit "></i> Resize Pool</button> -->
+
+          </div> <!-- tab-section -->
+        </div> <!-- col-md-12 -->
+      </div> <!-- row -->
+    </div>
+    <div id="poolscrubs">
+      <div id="ph-pool-scrubs"></div>
+    </div>
+    <div id="poolrebalances">
+      <div id="ph-pool-rebalances"></div>
+    </div>
+  </div>
+
+<div class="simple-overlay" id="resize-pool-form">
+  <div class="col-md-6 well">
+    <h4>Resize Pool({{poolName}})</h4>
+    <div id="alert-msg"></div></br>
+    Select new disk(s) to add to the pool or Unselect disk(s) to remove from the pool.<br>
+    You cannot add and remove disks simultaneously.<br>
+    If you do so, new disks will be added but no disks will be removed.<br>
+    After resizing a pool, it must be balanced manually. Auto balance is not supported yet.<br/>
+    <div id="disks-to-add"></div>
+
+    <br/>
+    <button id="resize-pool" class="btn btn-primary">Submit</button>
+  </div>
+</div>
+
+<div class="simple-overlay" id="pool-resize-raid-overlay">
+  <div class="overlay-content"> </div>
+</div>
+<div id="pool-resize-raid-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <div id="pool-resize-raid-modal-contents"></div>
+  </div>
+</div>
+
+<div id="delete-pool-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Delete Pool ({{poolName}})</h3>
+      </div>
+      <div class="modal-body">
+        <div class="messages"></div>
+        <h4>{{poolName}} will be deleted including it's Shares listed below and their Snapshots, NFS exports, Samba and SFTP config and Replicas. Are you sure?</h4>
+        <ul>
+        {{#each share}}
+        <li>{{this.name}} ({{this.size_gb}} GB)</li>
+        {{/each}}
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancel</button>
+        <button id="js-confirm-pool-delete" class="btn btn-primary">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,60 @@
+<script>
+/*
+ * Copyright (c) 2012-2013 RockStor, Inc. <http://rockstor.com>
+ * This file is part of RockStor.
+ *
+ * RockStor is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published
+ * by the Free Software Foundation; either version 2 of the License,
+ * or (at your option) any later version.
+ *
+ * RockStor is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+</script>
+
+<div class="messages"></div>
+{{#if status}}
+<span class="h2">Rock-ons</span>
+<div class="pull-right">
+  <a id="js-update-rockons" class="btn btn-primary pull-right" href="#" title="Check for new Rock-ons"><i class="glyphicon glyphicon-refresh "></i> Update</a>
+</div>
+<br><br>
+
+<ul class="nav nav-tabs">
+  <li class="active"><a href="#js-rockons-installed" data-toggle="tab">Installed</a></li>
+  <li><a href="#js-rockons-available" data-toggle="tab">All</a></li>
+</ul>
+
+<div class="css-panes">
+  <div>
+    {{display_installedRockons}}
+  </div>
+
+  <div id="js-rockons-available">
+    {{display_allRockons}}
+  </div>
+</div>
+
+
+<div class="simple-overlay" id="install-rockon-overlay">
+  <div class="overlay-content"></div>
+</div>
+
+<div id="install-rockon-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <div id="install-rockon-modal-contents"></div>
+  </div>
+</div>
+{{else}}
+<div class="alert alert-warning">
+  <strong>Warning!</strong> Rock-on service is not running. Please turn it on to use features on this screen.
+</div>
+{{/if}}

@@ -1,0 +1,70 @@
+<script>
+/*
+ * Copyright (c) 2012-2013 RockStor, Inc. <http://rockstor.com>
+ * This file is part of RockStor.
+ *
+ * RockStor is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published
+ * by the Free Software Foundation; either version 2 of the License,
+ * or (at your option) any later version.
+ *
+ * RockStor is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+</script>
+    <div class="row">
+    <div class="col-md-8">
+    <div class="panel panel-default">
+    <div class="panel-heading">Create Snapshot</div>
+    <div class="panel-body">
+      <form class="form-horizontal" name="add-snapshot-form" id="add-snapshot-form" >
+        <div class="messages"></div>
+        <div class="form-group">
+          <label class="col-sm-4 control-label" for="snapshot_name">Name<span class="required"> *</span></label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" name="snapshot_name" id="snapshot_name" title="Name of the Snapshot must start with a letter(a-z) and can be followed by any of the following characters: letter(a-z), digits(0-9), hyphen(-), underscore(_) or a period(.).">
+          </div>
+        </div>
+
+        <!-- Select Shares -->
+        <div class="form-group">
+         <label class="col-xs-4 control-label" for="shares">Share<span class="required"> *</span></label>
+         <div class="col-sm-4">
+         <select name="shares" id="shares" size="10" data-placeholder="Select share" title="Select the Share to snapshot">
+          {{show_shares_dropdown}}
+         </select>
+         </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-xs-4 control-label" for="snapshot-writable"> </label>
+          <div class="col-sm-4">
+            <input type="checkbox" name="writable" id="snapshot-writable" title="Snapshots can be made writable by selecting this checkbox"> Writable?
+           </div>
+        </div>
+
+       <div class="form-group">
+          <label class="col-xs-4 control-label" for="snapshot-visible"> </label>
+          <div class="col-sm-4">
+            <input type="checkbox" name="uvisible" id="snapshot-visible" title="Snapshots can be visible or hidden to the end user of the Share"> Visible to user?
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-xs-8 col-xs-offset-4">
+            <a class="btn btn-default" href="#" id="js-snapshot-cancel"> Cancel</a>
+            <input type="Submit" class="btn btn-primary" value="Submit" id="js-snapshot-save"></input>
+          </div>
+        </div>
+
+      </form>
+    </div>
+</div>
+</div>
+</div>

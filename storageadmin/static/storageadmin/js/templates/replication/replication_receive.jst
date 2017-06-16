@@ -1,0 +1,78 @@
+<script>
+/*
+ * Copyright (c) 2012-2013 RockStor, Inc. <http://rockstor.com>
+ * This file is part of RockStor.
+ *
+ * RockStor is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published
+ * by the Free Software Foundation; either version 2 of the License,
+ * or (at your option) any later version.
+ *
+ * RockStor is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+</script>
+<div class="row">
+<div class="col-md-12">
+<div id="details-header">
+<table>
+  <tr>
+    <td><span class="h3">Replication Service&nbsp;&nbsp;&nbsp;</span></td>
+    <td><input type="checkbox" name="replica-service-checkbox" data-size="mini"></td>
+</tr>
+</table>
+</div>
+
+
+<div id="replication-warning" class="alert alert-warning" style="display:none">
+<strong>Warning! The Replication service is not turned on.</strong>
+</div>
+
+<div class="messages"></div>
+<div id="details-header">
+<span class="h3">Replication Receive Tasks on this appliance</span>
+</div>
+{{#if collectionNotEmpty}}
+    <div class="row">
+    <div class="col-md-12">
+    <div class="messages"></div>
+    <!-- Content -->
+    <table id="replica-receives-table" class="table table-bordered table-striped share-table data-table" width="100%" summary="List of replica receives">
+    <thead>
+    <tr>
+    <th scope="col" abbr="Received Task ID">Received Task ID </th>
+    <th scope="col" abbr="Source Appliance">Source Appliance </th>
+    <th scope="col" abbr="Source Share">Source Share </th>
+    <th scope="col" abbr="Destination Pool">Destination Pool</th>
+    <th scope="col" abbr="Destination Share">Destination Share</th>
+    <th scope="col" abbr="Last">Last receive</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#each replicaColl}}
+        <tr>
+            <td>{{this.id}}<a href="#" data-rshare-name="{{this.share}}" data-rshare-id="{{this.id}}" data-action="delete">
+                <i class="glyphicon glyphicon-trash" rel="tooltip" title="Delete"></i></a>
+            </td>
+            <td>{{this.appliance}}</td>
+            <td>{{this.src_share}}</td>
+            <td><a href="#pools/{{this.pool}}">{{this.pool}}</a></td>
+            <td>{{this.share}}</td>
+            <td>{{lastReceived this.id}}</td>
+        </tr>
+    {{/each}}
+    </tbody>
+    </table>
+    </div> <!-- col-md-12 -->
+    </div> <!-- row -->
+{{else}} 
+    <div class="alert alert-warning"><h4>No replication receives on this appliance</h4></div>
+{{/if}}
+</div> <!-- col-md-12 -->
+</div> <!-- row -->

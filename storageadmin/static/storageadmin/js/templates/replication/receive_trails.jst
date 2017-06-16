@@ -1,0 +1,69 @@
+<script>
+/*
+ * Copyright (c) 2012-2013 RockStor, Inc. <http://rockstor.com>
+ * This file is part of RockStor.
+ *
+ * RockStor is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published
+ * by the Free Software Foundation; either version 2 of the License,
+ * or (at your option) any later version.
+ *
+ * RockStor is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+</script>
+
+<h4>Replication receive history for ( {{replicaShare.appliance}} : {{replicaShare.src_share}}
+ to {{replicaShare.pool}} : {{replicaShare.share}} )</h4>
+ 
+{{#if collectionNotEmpty}}
+  <div class="row">
+    <div class="col-md-12">
+      <div class="messages"></div>
+      <table id="receive-trails-table" class="table table-bordered table-striped share-table data-table" width="100%" summary="Replica trails">
+        <thead>
+          <tr>
+            <th scope="col" abbr="ID">ID</th>
+            <th scope="col" abbr="ID">Snapshot</th>
+            <th scope="col" abbr="Start Time">Start Time</th>
+            <th scope="col" abbr="Start Time">End Time</th>
+            <th scope="col" abbr="Start Time">Status</th>
+            <th scope="col" abbr="Start Time">Duration</th>
+            <th scope="col" abbr="Start Time">Data transferred / Transfer rate (KB)</th>
+          </tr>
+        </thead>
+        <tbody>
+        {{#each replicaReceiveColl}}
+            <tr>
+                <td>{{this.id}}</td>
+                <td>{{this.snap_name}}</td>
+                <td>{{getDateFormat this.receive_pending}}</td>
+                <td>{{#if this.end_ts}}
+                        {{getDateFormat this.end_ts}}
+                    {{/if}}
+                </td>
+                <td>{{#ifStatusSuccess this.status}}
+                        {{this.status}}
+                    {{else}}
+                        <i class="fa fa-exclamation-circle" title="{{this.error}}" rel="tooltip"></i>&nbsp;{{this.status}}
+                    {{/ifStatusSuccess}}
+                </td>
+                <td>{{#if this.end_ts}}
+                    {{getDuration this.end_ts receive_pending}}
+                    {{/if}}
+                </td>
+                <td>{{humanReadableSize this.kb_received}} at {{getRate this.end_ts this.receive_pending this.kb_received}} /sec.</td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{{/if}}
+

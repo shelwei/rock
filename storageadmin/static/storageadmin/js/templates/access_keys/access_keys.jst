@@ -1,0 +1,62 @@
+<script>
+/*
+ * Copyright (c) 2012-2014 RockStor, Inc. <http://rockstor.com>
+ * This file is part of RockStor.
+ * 
+ * RockStor is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published
+ * by the Free Software Foundation; either version 2 of the License,
+ * or (at your option) any later version.
+ * 
+ * RockStor is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * 
+ */
+</script>
+
+<h3>Access Keys</h3>
+<!-- Module Body -->
+<div class="row">
+  <div class="col-md-12">
+    <!-- Content -->
+    <div class="messages"></div>
+    <div id="access-keys-table-ph">
+    {{#if collectionNotEmpty}}
+        <table id="access-keys-table" class="table table-bordered table-striped data-table">
+          <thead>
+          <tr>
+            <th>Name</th>
+            <th>Access Key ID</th>
+            <th>Secret Access Key</th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody>
+          {{#each accessKeys}}
+            <tr>
+            <td>{{this.name}}</td>
+            <td>{{this.client_id}}</td>
+            <td>{{this.client_secret}}</td>
+            <td><a id="delete-access-key" data-id="{{this.id}}" data-name="{{this.name}}" data-action="delete" rel="tooltip" title="Delete access key">
+            <i class="glyphicon glyphicon-trash"></i></a>
+            </td>
+          </tr>
+          {{/each}}
+          </tbody>
+        </table>
+
+      {{else}}
+        <h4>No access keys have been created</h4>
+      {{/if}}
+    </div>
+
+    <a href="#add-access-key" id="add-access-key" class="btn btn-primary"><i class="glyphicon glyphicon-edit"></i> Add Access Key</a>
+    <!-- End Content -->
+  </div> <!--col-md-12 -->
+</div> <!-- row -->
+

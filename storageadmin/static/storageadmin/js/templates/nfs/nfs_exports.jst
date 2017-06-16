@@ -1,0 +1,91 @@
+<script>
+/*
+ * Copyright (c) 2012-2013 RockStor, Inc. <http://rockstor.com>
+ * This file is part of RockStor.
+ *
+ * RockStor is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published
+ * by the Free Software Foundation; either version 2 of the License,
+ * or (at your option) any later version.
+ *
+ * RockStor is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+</script>
+
+<!-- Module Body -->
+<div class="row">
+  <div class="col-md-12">
+  <div id="details-header">
+      <table>
+        <tr>
+          <td><span class="h3">NFS Service&nbsp;&nbsp;&nbsp;</span></td>
+          <td>
+          <input type="checkbox" name="nfs-export-checkbox" data-size="mini">
+        </td>
+        </tr>
+      </table>
+    </div>
+    <div id="nfs-warning" class="alert alert-warning" style="display:none">
+    	<strong>Warning! NFS Service is not running</strong>. Clients won't be able to mount unless NFS is running.
+    </div>
+    <br>
+    <div class="messages"></div>
+    <!-- Content -->
+    {{#if collectionNotEmpty}}
+      <table id="nfs-exports-table" class="table table-bordered table-striped share-table data-table" width="100%" summary="List of nfs exports">
+        <thead>
+          <tr>
+            <th scope="col" abbr="Host String">Host String</th>
+            <th scope="col" abbr="Shares">Shares</th>
+            <th scope="col" abbr="Writable">Writable</th>
+            <th scope="col" abbr="Sync">Sync / Async</th>
+            <th scope="col" abbr="Actions">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each nfsCollection}}
+            <tr>
+                <td>{{this.host_str}}</td>
+                <td>
+                {{#each this.exports}}
+                    {{this.share}} {{showNfsShares @index ../this.exports}}
+                {{/each}}
+                </td>
+                <td>{{showWritableOption this.editable}}</td>
+                <td>{{this.syncable}}</td>
+                <td><a href="#nfs-exports/edit/{{this.id}}"><i class="glyphicon glyphicon-edit"></i></a>&nbsp;
+                <a href="#" class="delete-nfs-export" data-id="{{this.id}}"><i class="glyphicon glyphicon-trash"></i></a>
+                </td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    {{else}}
+      <table id="nfs-exports-table" class="table table-condensed table-bordered table-hover table-striped share-table tablesorter" summary="List of nfs exports">
+        <tbody>
+          <tr>
+            <td colspan="5">
+              <h4>No nfs exports have been created</h4>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+   {{/if}}
+  
+    {{#if collectionNotEmpty}}
+      Mount a share using <code>mount {{currentApplianceIp}}:/export/&lt;share_name&gt; &lt;mount_pt&gt;</code>
+    {{/if}}
+    <!-- End Content -->
+  </div> <!-- col-md-12 -->
+</div> <!-- row -->
+<br>
+<a href="##nfs-exports/edit/-1" id="add-nfs-export" class="btn btn-primary"><i class="glyphicon glyphicon-edit "></i> Add NFS Export</a>
+<a href="#nfs-advanced-edit" id="nfs-advanced-edit" title="Edit /etc/exports file directly" class="btn btn-primary"><i class="glyphicon glyphicon-edit "></i> Advanced Edit</a>
+<!-- end module body -->

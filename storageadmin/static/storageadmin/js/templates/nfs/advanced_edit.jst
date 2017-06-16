@@ -1,0 +1,57 @@
+<script>
+/*
+ * Copyright (c) 2012-2013 RockStor, Inc. <http://rockstor.com>
+ * This file is part of RockStor.
+ *
+ * RockStor is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published
+ * by the Free Software Foundation; either version 2 of the License,
+ * or (at your option) any later version.
+ *
+ * RockStor is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+</script>
+
+<div class="alert alert-warning"><strong>Warning!</strong> You are editing the nfs exports file. Incorrect values can affect your exports.</div>
+<div class="row">
+  <div class="col-md-8">
+    <div class="panel panel-default">
+    <div class="panel-heading">NFS Advanced Edit</div>
+    <div class="panel-body">
+    <div class="messages"></div>
+      <form class="form-horizontal" id="advanced-edit-form" name="aform">
+
+        <div class="form-group">
+          <label class="col-sm-4 control-label" for="nfs-text">Automatically added entries</label>
+          <div class="col-sm-8">
+            <textarea id="nfs-text-ro" name="nfs-text-ro" rows="5" class="form-control" disabled>{{ro_str}}</textarea>
+          </div>
+        </div>
+
+	      <div class="form-group">
+            <label class="col-sm-4 control-label" for="manual-export">Enter manual export entries below.</label>
+          <div class="col-sm-8">
+            <textarea id="nfs-text" name="nfs-text" rows="5" columns="40" class="form-control">{{rw_str}}</textarea>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-sm-offset-4 col-sm-8">
+	          <a id="cancel" class="btn btn-default">Cancel</a>
+            <input type="Submit" id="create-nfs-export" class="btn btn-primary" value="Submit"></input>
+          </div>
+        </div>
+
+      </form>
+
+  </div> <!--panel-body-->
+</div> <!--panel-default-->
+</div> <!--col-md-8->
+</div> <!--row-->
